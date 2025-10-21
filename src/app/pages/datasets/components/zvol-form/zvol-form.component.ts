@@ -25,7 +25,7 @@ import { deduplicationSettingLabels } from 'app/enums/deduplication-setting.enum
 import { EncryptionKeyFormat } from 'app/enums/encryption-key-format.enum';
 import { onOffLabels } from 'app/enums/on-off.enum';
 import { Role } from 'app/enums/role.enum';
-import { inherit } from 'app/enums/with-inherit.enum';
+import { inherit, WithInherit } from 'app/enums/with-inherit.enum';
 import { ZfsPropertySource } from 'app/enums/zfs-property-source.enum';
 import { buildNormalizedFileSize } from 'app/helpers/file-size.utils';
 import { mapToOptions } from 'app/helpers/options.helper';
@@ -142,7 +142,7 @@ export class ZvolFormComponent implements OnInit {
     readonly: [null as string | null, Validators.required],
     volblocksize: [null as string | null, Validators.required],
     snapdev: [DatasetSnapdev.Hidden as string],
-    special_small_block_size: [inherit as string],
+    special_small_block_size: [inherit as WithInherit<'ON' | 'OFF'>],
     special_small_block_size_custom: [null as number | null],
     inherit_encryption: [true],
     encryption: [true],
@@ -617,7 +617,7 @@ export class ZvolFormComponent implements OnInit {
 
     // Handle special_small_block_size transformation
     const transformedValue = transformSpecialSmallBlockSizeForPayload(
-      data.special_small_block_size,
+      data.special_small_block_size as WithInherit<'ON' | 'OFF'>,
       data.special_small_block_size_custom,
     );
     if (transformedValue === undefined || transformedValue === inherit) {
@@ -701,7 +701,7 @@ export class ZvolFormComponent implements OnInit {
 
         // Handle special_small_block_size transformation
         const transformedValue = transformSpecialSmallBlockSizeForPayload(
-          data.special_small_block_size,
+          data.special_small_block_size as WithInherit<'ON' | 'OFF'>,
           data.special_small_block_size_custom,
         );
         if (transformedValue === undefined || transformedValue === inherit) {

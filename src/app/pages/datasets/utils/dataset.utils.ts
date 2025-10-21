@@ -1,6 +1,6 @@
 import { specialVdevDefaultThreshold } from 'app/constants/dataset.constants';
 import { EncryptionKeyFormat } from 'app/enums/encryption-key-format.enum';
-import { inherit } from 'app/enums/with-inherit.enum';
+import { inherit, WithInherit } from 'app/enums/with-inherit.enum';
 import { ZfsPropertySource } from 'app/enums/zfs-property-source.enum';
 import { Dataset, DatasetDetails } from 'app/interfaces/dataset.interface';
 import { ZfsProperty } from 'app/interfaces/zfs-property.interface';
@@ -101,12 +101,12 @@ export function getUserProperty<T>(
 
 /**
  * Transforms the special_small_block_size UI values to API payload format
- * @param uiValue The UI value ('ON', 'OFF', inherit, or number)
+ * @param uiValue The UI value ('ON', 'OFF', or inherit)
  * @param customValue The custom threshold value in bytes (optional)
  * @returns The API payload value (number or inherit), or undefined if should be deleted from payload
  */
 export function transformSpecialSmallBlockSizeForPayload(
-  uiValue: string | number,
+  uiValue: WithInherit<'ON' | 'OFF'>,
   customValue: number | null,
 ): number | typeof inherit | undefined {
   if (uiValue === 'ON') {
